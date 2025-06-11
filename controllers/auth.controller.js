@@ -1,25 +1,25 @@
 import User from '../models/userModel.js'; // .js uzantısını ekledik
 import jwt from 'jsonwebtoken';
 
-//Opsiyonel: Admin kullanıcısını ilk çalıştırmada oluşturmak için
-const createAdminUser = async () => {
-  try {
-    const existingAdmin = await User.findOne({ username: 'admin' });
-    if (!existingAdmin) {
-      const admin = new User({
-        username: 'admin',
-        password: '17042001yusuf',
-      });
-      await admin.save();
-      console.log('Admin user created successfully.');
-    } else {
-      console.log('Admin user already exists.');
-    }
-  } catch (error) {
-    console.error('Error creating admin user:', error);
-  }
-};
-createAdminUser();
+//Optional: To create the admin user on first run
+// const createAdminUser = async () => {
+//   try {
+//     const existingAdmin = await User.findOne({ username: 'admin' });
+//     if (!existingAdmin) {
+//       const admin = new User({
+//         username: 'your-username',
+//         password: 'your-password',
+//       });
+//       await admin.save();
+//       console.log('Admin user created successfully.');
+//     } else {
+//       console.log('Admin user already exists.');
+//     }
+//   } catch (error) {
+//     console.error('Error creating admin user:', error);
+//   }
+// };
+// createAdminUser();
 
 const generateToken = (res, userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
