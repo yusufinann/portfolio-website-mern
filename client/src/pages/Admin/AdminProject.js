@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../../components/Loader';
 
+
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function AdminProject({ data }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -80,7 +82,7 @@ function AdminProject({ data }) {
           _id: selectedProject._id,
           ...formData
         };
-        response = await axios.post('http://localhost:8000/api/project/update-project', updatedData);
+        response = await axios.post(`${API_BASE_URL}/api/project/update-project`, updatedData);
         
         if (response.data.success) {
           setSuccessMessage("Project başarıyla güncellendi!");
@@ -93,7 +95,7 @@ function AdminProject({ data }) {
         }
       } else {
         // Add new project
-        response = await axios.post('http://localhost:8000/api/project', formData);
+        response = await axios.post(`${API_BASE_URL}/api/project`, formData);
         
         if (response.data) {
           setSuccessMessage("Project başarıyla eklendi!");
@@ -141,7 +143,7 @@ function AdminProject({ data }) {
     
     setLoading(true);
     try {
-      const response = await axios.delete(`http://localhost:8000/api/project/${projectToDelete._id}`);
+      const response = await axios.delete(`${API_BASE_URL}/api/project/${projectToDelete._id}`);
       
       if (response.data.success) {
         setSuccessMessage("Project başarıyla silindi!");

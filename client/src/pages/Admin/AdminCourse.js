@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Loader from '../../components/Loader';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function AdminCourse({ data }) {
   const initialFormState = {
     title: '',
@@ -69,13 +70,13 @@ function AdminCourse({ data }) {
           _id: selectedCourse._id,
           ...formData
         };
-        response = await axios.post('http://localhost:8000/api/course/update-course', updatedData);
+        response = await axios.post(`${API_BASE_URL}/api/course/update-course`, updatedData);
         if (response.data.success) {
           setSuccessMessage("Course Updated Successfully!");
         }
       } else {
         // Add new course
-        response = await axios.post('http://localhost:8000/api/course', formData);
+        response = await axios.post(`${API_BASE_URL}/api/course`, formData);
         if (response.data) {
           setSuccessMessage("New Course Added Successfully!");
           // Reset form after adding
@@ -114,7 +115,7 @@ function AdminCourse({ data }) {
     
     setLoading(true);
     try {
-      const response = await axios.delete(`http://localhost:8000/api/course/${courseToDelete._id}`);
+      const response = await axios.delete(`${API_BASE_URL}/api/course/${courseToDelete._id}`);
       
       if (response.data.success) {
         setSuccessMessage("Course deleted successfully!");

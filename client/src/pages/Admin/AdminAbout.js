@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Loader from '../../components/Loader';
-
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function AdminAbout({ data }) {
   const [formData, setFormData] = useState({
     lottieURL: "",
@@ -81,7 +81,10 @@ function AdminAbout({ data }) {
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/about/update-about', updatedData);
+      const response = await axios.post(
+      `${API_BASE_URL}/api/about/update-about`,
+      updatedData
+    );
       if (response.data.success) {
         setSuccessMessage("About başarıyla güncellendi!");
         setTimeout(() => {

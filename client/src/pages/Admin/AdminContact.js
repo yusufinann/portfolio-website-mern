@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Loader from '../../components/Loader';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function AdminContact({data}) {
   const [formData, setFormData] = useState({
     name: '', age: '', gender: '', email: '', mobile: '', country: ''
@@ -39,7 +40,7 @@ console.log(data)
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/contact/update-contact', formData);
+      const response = await axios.post(`${API_BASE_URL}/api/contact/update-contact`, formData);
       if (response.data.success) {
         setSuccessMessage('Contact updated successfully!');
         setTimeout(() => setSuccessMessage(''), 3000); // Clear success message after 3 seconds

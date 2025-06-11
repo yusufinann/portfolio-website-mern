@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const PortfolioContext = createContext();
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 export const PortfolioProvider = ({ children }) => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ export const PortfolioProvider = ({ children }) => {
   const fetchPortfolioData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/portfolio/get-portfolio-data');
+      const response = await axios.get(`${API_BASE_URL}/api/portfolio/get-portfolio-data`);
       setPortfolioData(response.data);
       setError(null);
     } catch (err) {
@@ -30,7 +31,7 @@ export const PortfolioProvider = ({ children }) => {
   const checkLoggedIn = async () => {
     setAuthLoading(true);
     try {
-      const { data } = await axios.get('/api/auth/check-auth', { withCredentials: true });
+      const { data } = await axios.get(`${API_BASE_URL}/api/auth/check-auth`, { withCredentials: true });
       if (data.isAuthenticated) {
         setUserInfo(data.user);
         setIsAuthenticated(true);
@@ -53,7 +54,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post('/api/auth/logout', {}, { withCredentials: true });
+      await axios.post(`${API_BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
     } catch (err) {
       console.error("Logout API error:", err);
     } finally {

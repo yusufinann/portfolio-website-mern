@@ -3,6 +3,8 @@ import axios from "axios"; // Axios'u import ediyoruz
 import "./adminintro.css"; // CSS dosyasını import ediyoruz
 import Loader from "../../components/Loader";
 
+
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function AdminIntro({ data }) {
   const [formData, setFormData] = useState({
     welcomeText: "", // welcomeText alanı eklendi
@@ -53,7 +55,7 @@ function AdminIntro({ data }) {
 
     try {
       // Axios ile POST isteği atma
-      const response = await axios.post('http://localhost:8000/api/intro/update-intro', updatedData);
+      const response = await axios.post(`${API_BASE_URL}/api/intro/update-intro`, updatedData);
       console.log(response.data); // Başarılı yanıtı konsola yazdırıyoruz
 
       if (response.data.success) {

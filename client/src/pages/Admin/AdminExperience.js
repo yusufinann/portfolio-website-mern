@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loader from '../../components/Loader';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function AdminExperience({ experiences }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -58,13 +59,13 @@ function AdminExperience({ experiences }) {
           _id: selectedExperience._id,
           ...formData
         };
-        response = await axios.post('http://localhost:8000/api/experience/update-experience', updatedData);
+        response = await axios.post(`${API_BASE_URL}/api/experience/update-experience`, updatedData);
         if (response.data.success) {
           setSuccessMessage("Experience başarıyla güncellendi!");
         }
       } else {
         // Add new experience
-        response = await axios.post('http://localhost:8000/api/experience', formData);
+        response = await axios.post(`${API_BASE_URL}/api/experience`, formData);
         if (response.data) {
           setSuccessMessage("Experience başarıyla eklendi!");
         }
@@ -97,7 +98,7 @@ function AdminExperience({ experiences }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/experience/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/experience/${id}`);
       setSuccessMessage("Experience başarıyla silindi!");
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
