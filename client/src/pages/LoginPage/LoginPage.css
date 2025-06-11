@@ -1,0 +1,127 @@
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* Açık gri bir arka plan */
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif; /* Daha modern bir font */
+}
+
+.login-form-wrapper {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-header h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.login-header p {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+.login-form .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+  border-color: #007bff; /* Odaklandığında mavi çerçeve */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #007bff; /* Ana renk (mavi) */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3; /* Hover'da biraz daha koyu mavi */
+}
+
+.login-button:active {
+  transform: scale(0.98); /* Tıklandığında küçük bir basılma efekti */
+}
+
+.login-button:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #dc3545; /* Hata mesajları için kırmızı */
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}

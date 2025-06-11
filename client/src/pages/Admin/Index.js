@@ -1,31 +1,83 @@
 import React, { useState } from "react";
-import Header from "../../components/Header"; // Header bileşenini ekledik
-import "./Tabs.css"; // Custom CSS dosyası
+import { useNavigate } from "react-router-dom"; // useNavigate import edin
+import Header from "../../components/Header";
+import "./Tabs.css";
 import AdminIntro from "./AdminIntro";
 import AdminAbout from "./AdminAbout";
-import { usePortfolio } from "../../context/PortfolioContext ";
 import Loader from "../../components/Loader";
 import AdminExperience from "./AdminExperience";
 import AdminProject from "./AdminProject";
 import AdminCourse from "./AdminCourse";
 import AdminContact from "./AdminContact";
+import { usePortfolio } from "../../context/PortfolioContext ";
 
-function Index() {
+function Admin() {
   const [activeTab, setActiveTab] = useState(1);
-  const { portfolioData, loading, error } = usePortfolio();
+  const navigate = useNavigate(); 
+  const {
+    portfolioData,
+    loading: portfolioLoading, 
+    error,
+    logout,
+    userInfo,
+    // authLoading // Eğer burada da authLoading'i kontrol etmek isterseniz ekleyebilirsiniz
+  } = usePortfolio();
 
-  if (loading) {
-    return <Loader/>; // Yüklenme göstergesi
+  const handleLogout = async () => {
+    await logout(); // Context'teki logout fonksiyonunu çağır
+    navigate('/login'); // Logout sonrası login sayfasına yönlendir
+  };
+
+  // Eğer portfolyo verisi yükleniyorsa Loader göster
+  // ProtectedRoute zaten authLoading'i hallettiği için burada sadece portfolioLoading'i kontrol edebiliriz.
+  if (portfolioLoading && !portfolioData) {
+    return <Loader />;
   }
 
+  // Eğer portfolyo verisi yüklenirken bir hata oluştuysa
   if (error) {
-    return <div>Error: {error.message}</div>; // Hata mesajı
+    return <div>Error loading portfolio data: {error.message || JSON.stringify(error)}</div>;
+  }
+
+  // portfolioData gelmemişse (henüz yüklenmemiş veya bir sorun var)
+  // Bu kontrol yukarıdaki portfolioLoading ile birleşebilir, ama ekstra güvenlik.
+  if (!portfolioData) {
+    return <Loader />; // Veya "Portfolyo verisi bulunamadı." gibi bir mesaj
   }
 
   return (
     <div>
-      <Header /> {/* Header bileşeni burada */}
-      
+      <Header />
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '10px 20px',
+          background: '#f0f0f0',
+          borderBottom: '1px solid #ddd',
+        }}
+      >
+        <span>
+          Hoşgeldiniz, <strong>{userInfo?.username || 'Admin'}</strong>!
+        </span>
+        <button
+          onClick={handleLogout}
+          style={{
+            padding: '8px 15px',
+            backgroundColor: '#dc3545',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '14px',
+          }}
+        >
+          Çıkış Yap
+        </button>
+      </div>
+
       <div className="container">
         {/* Tab Headers */}
         <div className="tabs">
@@ -69,28 +121,17 @@ function Index() {
 
         {/* Tab Contents */}
         <div className="tab-content">
-          {activeTab === 1 && (
-           <AdminIntro data={portfolioData?.intro}/>
-          )}
-          {activeTab === 2 && (
-           <AdminAbout data={portfolioData?.about}/>
-          )}
-          {activeTab === 3 && (
-           <AdminExperience experiences={portfolioData?.experiences}/>
-          )}
-          {activeTab === 4 && (
-             <AdminProject data={portfolioData?.projects}/>
-          )}
-          {activeTab === 5 && (
-            <AdminCourse data={portfolioData?.courses}/>
-          )}
-          {activeTab === 6 && (
-            <AdminContact data={portfolioData?.contact}/>
-          )}
+          {activeTab === 1 && <AdminIntro data={portfolioData.intro} />}
+          {activeTab === 2 && <AdminAbout data={portfolioData.about} />}
+          {activeTab === 3 && <AdminExperience experiences={portfolioData.experiences} />}
+          {activeTab === 4 && <AdminProject data={portfolioData.projects} />}
+          {activeTab === 5 && <AdminCourse data={portfolioData.courses} />}
+          {activeTab === 6 && <AdminContact data={portfolioData.contact} />}
         </div>
       </div>
     </div>
   );
 }
 
-export default Index;
+// Fonksiyon adını App.js'teki import ile tutarlı tutun
+export default Admin;

@@ -1,37 +1,94 @@
-import React, { createContext, useState, useEffect } from 'react';
+// frontend/src/context/PortfolioContext.js
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-// Context oluşturuyoruz
 const PortfolioContext = createContext();
 
-// Context Provider bileşeni oluşturuyoruz
 export const PortfolioProvider = ({ children }) => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // API'den verileri çekiyoruz
-  useEffect(() => {
-    const fetchPortfolioData = async () => {
-      try {
-        const response = await axios.get('/api/portfolio/get-portfolio-data');
-        setPortfolioData(response.data);
-      } catch (error) {
-        setError('Failed to fetch portfolio data');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const [userInfo, setUserInfo] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
-    fetchPortfolioData();
+  const fetchPortfolioData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/portfolio/get-portfolio-data');
+      setPortfolioData(response.data);
+      setError(null);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to fetch portfolio data');
+      setPortfolioData(null);
+      console.error("Portfolio data fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const checkLoggedIn = async () => {
+    setAuthLoading(true);
+    try {
+      const { data } = await axios.get('/api/auth/check-auth', { withCredentials: true });
+      if (data.isAuthenticated) {
+        setUserInfo(data.user);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+        setUserInfo(null);
+      }
+    } catch (err) {
+      console.warn('Auth check error:', err.response?.data?.message || err.message);
+      setIsAuthenticated(false);
+      setUserInfo(null);
+    }
+    setAuthLoading(false);
+  };
+
+  const login = (userData) => {
+    setUserInfo({ _id: userData._id, username: userData.username });
+    setIsAuthenticated(true);
+  };
+
+  const logout = async () => {
+    try {
+      await axios.post('/api/auth/logout', {}, { withCredentials: true });
+    } catch (err) {
+      console.error("Logout API error:", err);
+    } finally {
+      setUserInfo(null);
+      setIsAuthenticated(false);
+    }
+  };
+
+  useEffect(() => {
+    const initializeApp = async () => {
+      await checkLoggedIn();
+      await fetchPortfolioData();
+    };
+    initializeApp();
   }, []);
 
   return (
-    <PortfolioContext.Provider value={{ portfolioData, loading, error }}>
+    <PortfolioContext.Provider
+      value={{
+        portfolioData,
+        loading,
+        error,
+        fetchPortfolioData,
+        isAuthenticated,
+        userInfo,
+        authLoading,
+        login,
+        logout,
+        checkLoggedIn,
+      }}
+    >
       {children}
     </PortfolioContext.Provider>
   );
 };
 
-// useContext Hook kullanarak Context'e erişim sağlamak için bir kısayol oluşturuyoruz
-export const usePortfolio = () => React.useContext(PortfolioContext);
+export const usePortfolio = () => useContext(PortfolioContext);
