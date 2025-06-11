@@ -15,7 +15,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      navigate('/admin'); // Eğer zaten giriş yapılmışsa ve auth kontrolü bittiyse admin'e yönlendir
+      navigate('/admin'); 
     }
   }, [isAuthenticated, authLoading, navigate]);
 
@@ -29,16 +29,16 @@ function LoginPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        withCredentials: true, // Cookie tabanlı auth için çok önemli!
+        withCredentials: true, 
       };
       const { data } = await axios.post(
-        'http://localhost:8000/api/auth/login',
+        '/api/auth/login',
         { username, password },
         config
       );
 
-      login(data); // Context'teki login fonksiyonunu çağır (kullanıcı bilgisini ve auth durumunu günceller)
-      navigate('/admin'); // Başarılı giriş sonrası admin paneline yönlendir
+      login(data); 
+      navigate('/admin'); 
     } catch (err) {
       setError(
         err.response?.data?.message ||
@@ -50,13 +50,12 @@ function LoginPage() {
   };
 
   if (authLoading) {
-    return <Loader />; // Auth durumu kontrol edilirken yükleme ekranı
+    return <Loader />; 
   }
   
-  // Eğer hala giriş yapmış durumdaysa (useEffect'ten sonra bir render döngüsü daha olursa diye)
   if (isAuthenticated) {
-     navigate('/admin'); // Güvenlik için tekrar yönlendirme
-     return null; // Veya bir yükleme göstergesi
+     navigate('/admin'); 
+     return null; 
   }
 
   return (

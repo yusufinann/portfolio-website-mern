@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate import edin
+import { useNavigate } from "react-router-dom"; 
 import Header from "../../components/Header";
 import "./Tabs.css";
 import AdminIntro from "./AdminIntro";
@@ -20,29 +20,24 @@ function Admin() {
     error,
     logout,
     userInfo,
-    // authLoading // Eğer burada da authLoading'i kontrol etmek isterseniz ekleyebilirsiniz
   } = usePortfolio();
 
   const handleLogout = async () => {
-    await logout(); // Context'teki logout fonksiyonunu çağır
-    navigate('/login'); // Logout sonrası login sayfasına yönlendir
+    await logout();
+    navigate('/login'); 
   };
 
-  // Eğer portfolyo verisi yükleniyorsa Loader göster
-  // ProtectedRoute zaten authLoading'i hallettiği için burada sadece portfolioLoading'i kontrol edebiliriz.
   if (portfolioLoading && !portfolioData) {
     return <Loader />;
   }
 
-  // Eğer portfolyo verisi yüklenirken bir hata oluştuysa
+  
   if (error) {
     return <div>Error loading portfolio data: {error.message || JSON.stringify(error)}</div>;
   }
 
-  // portfolioData gelmemişse (henüz yüklenmemiş veya bir sorun var)
-  // Bu kontrol yukarıdaki portfolioLoading ile birleşebilir, ama ekstra güvenlik.
   if (!portfolioData) {
-    return <Loader />; // Veya "Portfolyo verisi bulunamadı." gibi bir mesaj
+    return <Loader />; 
   }
 
   return (
@@ -133,5 +128,4 @@ function Admin() {
   );
 }
 
-// Fonksiyon adını App.js'teki import ile tutarlı tutun
 export default Admin;

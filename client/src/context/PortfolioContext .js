@@ -1,4 +1,3 @@
-// frontend/src/context/PortfolioContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
