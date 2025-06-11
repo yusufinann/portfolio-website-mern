@@ -5,6 +5,8 @@ import './LoginPage.css';
 import { usePortfolio } from '../../context/PortfolioContext ';
 import Loader from '../../components/Loader';
 
+
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +34,7 @@ function LoginPage() {
         withCredentials: true, 
       };
       const { data } = await axios.post(
-        '/api/auth/login',
+        `${API_BASE_URL}/api/auth/login`,
         { username, password },
         config
       );
