@@ -7,7 +7,7 @@ function LeftSider() {
         <div className="flex flex-col space-y-4">
           {/* LinkedIn Icon */}
           <a
-            href="https://www.linkedin.com"
+            href="https://www.linkedin.com/in/yusuf-inan-a42396266/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -40,7 +40,7 @@ function LeftSider() {
 
           {/* Gmail Icon */}
           <a
-            href="mailto:your-email@gmail.com"
+            href="mailto:iinanyusuf@gmail.com"
             aria-label="Email"
             className="text-4xl transition duration-300"
             style={{ color: '#D93025' }}
