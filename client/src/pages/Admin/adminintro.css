@@ -1,0 +1,129 @@
+.form-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .submit-button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+
+  .success-alert {
+    position: fixed; /* Sabit konumda */
+    top: 50%; /* Dikey ortalama */
+    left: 50%; /* Yatay ortalama */
+    transform: translate(-50%, -50%); /* Gerçekten ortalamak için */
+    background-color: #d4edda; /* Başarı mesajı için arka plan rengi */
+    color: #155724; /* Başarı mesajı için metin rengi */
+    padding: 20px; /* Daha fazla iç boşluk */
+    margin: 0; /* Marjin yok */
+    border: 1px solid #c3e6cb; /* Başarı mesajı için sınır rengi */
+    border-radius: 5px; /* Köşe yuvarlama */
+    font-weight: bold; /* Kalın metin */
+    z-index: 1000; /* Diğer içeriklerin üstünde görünmesi için */
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s; /* Fade in ve fade out animasyonları */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  /*Admin About Css*/
+  .skills-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.add-skill-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-chip {
+  background-color: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.remove-skill {
+  margin-left: 10px;
+  color: red;
+  cursor: pointer;
+}
